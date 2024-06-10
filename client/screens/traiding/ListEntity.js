@@ -68,7 +68,6 @@ export const ListEntity = ({
             onSelect={() => {
               setSelectedForSale(entity);
               handleStep('three');
-              console.log('Selected entity:', entity);
             }}
           />
         ))}

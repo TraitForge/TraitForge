@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+
 import { EntityCard } from '@/components';
 import { ListingHeader } from '@/screens/forging/ListingHeader';
 
@@ -17,7 +19,8 @@ export const ListEntity = ({
         );
         setFilteredEntities(filtered);
       } catch (error) {
-        console.error('Error in fetchAndFilterEntities:', error);
+        console.error(error);
+        toast.error('Error filtering enitites');
       }
     };
 

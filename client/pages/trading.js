@@ -32,6 +32,11 @@ const Marketplace = () => {
   const [sortingFilter, setSortingFilter] = useState('');
   const { open } = useWeb3Modal();
 
+  useEffect(() => {
+    getEntitiesForSale();
+    getOwnersEntities();
+  }, []);
+
   const handleSort = type => setSortOption(type);
 
   const handleFilterChange = (selectedOption, type) => {

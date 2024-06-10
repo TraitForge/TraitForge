@@ -83,7 +83,7 @@ export const FiltersHeader = ({
   };
 
   return (
-    <div className="flex w-full items-center uppercase pt-6 z-50">
+    <div className="flex w-full items-center uppercase pt-6 z-[100]">
       <div className="flex gap-x-2 md:gap-x-6 text-[24px]">
         {filterOptions.map(type => (
           <button

@@ -117,7 +117,7 @@ const Forging = () => {
                 onClick={handleListingPage}
               />
             </div>
-            <div className="py-7 md:py-10 3xl:py-20">
+            <div className="py-7 md:py-10 3xl:py-16">
               <ForgingArena
                 selectedFromPool={selectedFromPool}
                 selectedFromWallet={selectedEntity}
