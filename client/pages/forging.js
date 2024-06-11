@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { toast } from 'react-toastify';
 
@@ -19,18 +19,21 @@ const Forging = () => {
     setIsLoading,
     ownerEntities,
     entitiesForForging,
+    getOwnersEntities,
     getEntitiesForForging,
   } = useContextState();
   const [step, setStep] = useState('one');
   const [isEntityListModalOpen, setIsEntityListModalOpen] = useState(false);
   const [isOwnerListOpen, setIsOwnerListOpen] = useState(false);
   const [selectedFromPool, setSelectedFromPool] = useState(null);
-  const [processing, setProcessing] = useState(false);
   const { walletProvider } = useWeb3ModalProvider();
   const [selectedEntity, setSelectedEntity] = useState(null);
   const [selectedForListing, setSelectedForListing] = useState(null);
-  const [processingText, setProcessingText] = useState('');
-  const [generationFilter, setGenerationFilter] = useState('');
+
+  useEffect(() => {
+    getEntitiesForForging();
+    getOwnersEntities();
+  }, []);
 
   const handleSelectedFromPool = entity => setSelectedFromPool(entity);
   const handleSelectedFromWallet = entity => setSelectedEntity(entity);
@@ -42,8 +45,7 @@ const Forging = () => {
   const handleListingPage = () => setStep('two');
 
   const forgeEntity = async () => {
-    setProcessing(true);
-    setProcessingText('Forging');
+    setIsLoading(true);
     try {
       const forgeContract = await createContract(
         walletProvider,
@@ -60,12 +62,12 @@ const Forging = () => {
         }
       );
       await transaction.wait();
-      setProcessingText('Merging');
       toast.success('Forged successfully');
     } catch (error) {
       toast.error(`Failed to Forge`);
+    } finally {
+      setIsLoading(false);
     }
-    setGenerationFilter('');
   };
 
   const listEntityForForging = async (selectedForListing, fee) => {
@@ -83,6 +85,7 @@ const Forging = () => {
       );
       await transaction.wait();
       toast.success('Listed Successfully');
+      getEntitiesForForging();
       setStep('one');
     } catch (error) {
       toast.error(`Failed to List Entity`);
@@ -132,7 +135,7 @@ const Forging = () => {
                 borderColor="#FD8D26"
                 width="408"
                 height="92"
-                disabled={processing}
+                disabled={isLoading}
                 onClick={forgeEntity}
               />
             </div>

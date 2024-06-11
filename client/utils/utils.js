@@ -155,6 +155,7 @@ export const getCurrentGenerationHook = async infuraProvider => {
     const currentGeneration = await TraitForgeContract.getGeneration();
     return currentGeneration.toString();
   } catch (err) {
+    console.log(err);
     toast.error('Failed to fetch current generation:');
   }
 };
@@ -247,6 +248,7 @@ export const mintEntityHandler = async (walletProvider, open, entityPrice) => {
     await transaction.wait();
     toast.success('Entity minted successfully');
   } catch (error) {
+    console.error(error);
     toast.error(`Minting entity failed`);
   }
 };

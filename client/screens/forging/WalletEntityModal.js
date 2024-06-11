@@ -16,7 +16,6 @@ export const WalletEntityModal = ({
         const filtered = ownerEntities.filter(
           entity => entity.role === 'Merger'
         );
-        console.log('Filtered entities:', filtered);
         setFilteredEntities(filtered);
       } catch (error) {
         console.error('Error in filterEntities:', error);

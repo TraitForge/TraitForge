@@ -44,9 +44,9 @@ export const FiltersHeader = ({
     color === 'orange'
       ? '#ff7a00'
       : color === 'green'
-        ? '#4CAF50'
+        ? '#0EEB81'
         : color === 'purple'
-          ? '#B026FF'
+          ? '#FC62FF'
           : '#ccc';
   const customStyles = {
     control: styles => ({
