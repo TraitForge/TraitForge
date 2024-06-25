@@ -49,10 +49,7 @@ const Marketplace = () => {
 
   const filteredAndSortedListings = useMemo(() => {
     let filtered = entitiesForSale.filter(listing => {
-      if (
-        generationFilter &&
-        String(listing.generation) !== String(generationFilter)
-      ) {
+      if (generationFilter && String(listing.generation) !== String(generationFilter)) {
         return false;
       }
 
@@ -107,10 +104,7 @@ const Marketplace = () => {
         contractsConfig.entityTradingAbi
       );
       const priceInWei = ethers.parseEther(price);
-      const transaction = await tradeContract.listNFTForSale(
-        entity.tokenId,
-        priceInWei
-      );
+      const transaction = await tradeContract.listNFTForSale(entity.tokenId, priceInWei);
       await transaction.wait();
       getOwnersEntities();
       getEntitiesForSale();
@@ -126,30 +120,20 @@ const Marketplace = () => {
 
   let content;
 
-  if (isLoading)
-    return (
-      <div className="h-full w-full flex justify-center items-center">
-        <LoadingSpinner color="#0EEB81" />
-      </div>
-    );
+  // if (isLoading)
+  //   return (
+  //     <div className="h-full w-full flex justify-center items-center">
+  //       <LoadingSpinner color="#0EEB81" />
+  //     </div>
+  //   );
 
   switch (step) {
     case 'four':
-      content = (
-        <BuyEntity
-          handleStep={handleStep}
-          selectedListing={selectedListing}
-          buyEntity={buyEntity}
-        />
-      );
+      content = <BuyEntity handleStep={handleStep} selectedListing={selectedListing} buyEntity={buyEntity} />;
       break;
     case 'three':
       content = (
-        <SellEntity
-          handleStep={handleStep}
-          selectedForSale={selectedForSale}
-          listEntityForSale={listEntityForSale}
-        />
+        <SellEntity handleStep={handleStep} selectedForSale={selectedForSale} listEntityForSale={listEntityForSale} />
       );
       break;
     case 'two':
@@ -170,9 +154,7 @@ const Marketplace = () => {
               sortOption={sortOption}
               handleSort={handleSort}
               color="green"
-              handleFilterChange={(selectedOption, type) =>
-                handleFilterChange(selectedOption, type)
-              }
+              handleFilterChange={(selectedOption, type) => handleFilterChange(selectedOption, type)}
               generationFilter={generationFilter}
               sortingFilter={sortingFilter}
             />

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { Logo } from '@/icons';
 import ConnectButton from '@/components/ui/WalletButton';
+import { icons } from '@/icons/icons';
 
 const links = [
   { url: '/', text: 'HOME' },
@@ -22,14 +23,12 @@ const Navbar = () => {
     setIsMenuOpen(false);
   }, [router.asPath]);
 
-  const commonClasses = `text-base flex items-center py-6 lg:text-[32px] lg:text-[32px] relative after:absolute after:bottom-0 after:left-0 after:w-full hover:after:h-[2px] after:h-[0px]`;
+  const commonClasses = `text-base font-bebas flex items-center py-6 lg:text-[32px] lg:text-[32px] relative after:absolute after:bottom-0 after:left-0 after:w-full hover:after:h-[2px] after:h-[0px]`;
   const navLinkClasses = classNames(commonClasses, {
     'after:bg-neon-orange hover:text-neon-orange': router.asPath === '/forging',
     'after:bg-neon-green hover:text-neon-green': router.asPath === '/trading',
-    'after:bg-neon-purple hover:text-neon-purple':
-      router.asPath === '/nuke-fund',
-    'after:bg-neon-green-yellow hover:text-neon-green-yellow':
-      router.asPath === '/stats',
+    'after:bg-neon-purple hover:text-neon-purple': router.asPath === '/nuke-fund',
+    'after:bg-neon-green-yellow hover:text-neon-green-yellow': router.asPath === '/stats',
     'after:bg-primary hover:text-primary': router.asPath === '/',
   });
 
@@ -41,9 +40,7 @@ const Navbar = () => {
     'text-primary': router.asPath === '/',
   });
 
-  const expandedClasses = classNames(
-    'container max-lg:py-1 flex items-center justify-between'
-  );
+  const expandedClasses = classNames('container max-lg:py-1 flex items-center justify-between');
 
   return (
     <header>
@@ -54,10 +51,7 @@ const Navbar = () => {
         <ul className="flex gap-x-[20px] xl:gap-x-[64px] max-lg:hidden">
           {links.map((link, index) => (
             <li key={index}>
-              <Link
-                className={`${navLinkClasses} ${link.url === router.asPath && activeClass}`}
-                href={link.url}
-              >
+              <Link className={`${navLinkClasses} ${link.url === router.asPath && activeClass}`} href={link.url}>
                 {link.text}
               </Link>
             </li>
@@ -65,61 +59,8 @@ const Navbar = () => {
         </ul>
         <div className="walletbackground flex justify-center p-1 rounded-lg gap-x-6">
           <ConnectButton />
-          <button
-            className="block lg:hidden"
-            onClick={() => setIsMenuOpen(prevState => !prevState)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="26"
-              fill="none"
-              viewBox="0 0 28 26"
-            >
-              <g
-                stroke="#fff"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                filter="url(#filter0_d_2191_58)"
-              >
-                <path d="M5.75 12.5h16.5M5.75 6.5h16.5M5.75 18.5h16.5"></path>
-              </g>
-              <defs>
-                <filter
-                  id="filter0_d_2191_58"
-                  width="26.5"
-                  height="22"
-                  x="0.75"
-                  y="5.5"
-                  colorInterpolationFilters="sRGB"
-                  filterUnits="userSpaceOnUse"
-                >
-                  <feFlood
-                    floodOpacity="0"
-                    result="BackgroundImageFix"
-                  ></feFlood>
-                  <feColorMatrix
-                    in="SourceAlpha"
-                    result="hardAlpha"
-                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                  ></feColorMatrix>
-                  <feOffset dy="4"></feOffset>
-                  <feGaussianBlur stdDeviation="2"></feGaussianBlur>
-                  <feComposite in2="hardAlpha" operator="out"></feComposite>
-                  <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"></feColorMatrix>
-                  <feBlend
-                    in2="BackgroundImageFix"
-                    result="effect1_dropShadow_2191_58"
-                  ></feBlend>
-                  <feBlend
-                    in="SourceGraphic"
-                    in2="effect1_dropShadow_2191_58"
-                    result="shape"
-                  ></feBlend>
-                </filter>
-              </defs>
-            </svg>
+          <button className="block lg:hidden" onClick={() => setIsMenuOpen(prevState => !prevState)}>
+            {icons.menu()}
           </button>
         </div>
         {isMenuOpen && (

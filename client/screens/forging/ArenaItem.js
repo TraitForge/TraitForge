@@ -31,15 +31,15 @@ export const ArenaItem = ({
         <Image
           src={image}
           alt="forge place holder"
-          width={400}
-          height={500}
+          width={700}
+          height={700}
           className="w-full h-full hidden md:block"
         />
         <Image
           src="/images/walletSelectCardSm.png"
           alt="forge place holder"
-          width={400}
-          height={500}
+          width={600}
+          height={600}
           className="w-full h-full block md:hidden"
         />
       </button>

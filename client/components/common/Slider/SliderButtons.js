@@ -5,17 +5,8 @@ export const SliderButtons = () => {
 
   return (
     <>
-      <button
-        onClick={() => swiper?.slidePrev()}
-        className={`custom-slider-arrow custom-slider-arrow-left`}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="84"
-          height="65"
-          fill="none"
-          viewBox="0 0 84 65"
-        >
+      <button onClick={() => swiper?.slidePrev()} className={`custom-slider-arrow custom-slider-arrow-left`}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="84" height="65" fill="none" viewBox="0 0 84 65">
           <path
             fill="#0ADFDB"
             d="M66.386 1.828L82.461 12.78v47.845l-2.548 2.548h-62.71L1.539 52.217V4.372l2.548-2.544h62.3zM9.95 0L7.122 1.37H3.898l-2.82 2.813v1.134L0 6.397v5.146l1.077 1.13v31.345L0 45.098v5.146l1.077 1.127v1.086L17 63.587l.062.043h4.581L24.426 65h49.93l2.824-1.37h2.922l2.817-2.817v-1.152L84 58.58v-5.146l-1.08-1.127V20.964l1.08-1.08v-5.146l-1.08-1.13v-1.069L66.585 1.41l-.058-.04h-3.865L59.876 0H9.95z"
@@ -47,13 +38,7 @@ export const SliderButtons = () => {
         onClick={() => swiper.slideNext()}
         className={`absolute top-1/2 right-0 custom-slider-arrow custom-slider-arrow-right`}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="84"
-          height="65"
-          fill="none"
-          viewBox="0 0 84 65"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="84" height="65" fill="none" viewBox="0 0 84 65">
           <path
             fill="#0ADFDB"
             d="M17.614 1.828L1.539 12.78v47.845l2.548 2.548h62.71l15.664-10.955V4.372l-2.548-2.544h-62.3zM74.05 0l2.828 1.37h3.224l2.82 2.813v1.134L84 6.397v5.146l-1.077 1.13v31.345L84 45.098v5.146l-1.077 1.127v1.086L67 63.587l-.062.043h-4.581L59.574 65H9.644L6.82 63.63H3.898L1.08 60.813v-1.152L0 58.58v-5.146l1.08-1.127V20.964L0 19.884v-5.146l1.08-1.13v-1.069L17.415 1.41l.058-.04h3.865L24.124 0H74.05z"

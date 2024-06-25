@@ -37,11 +37,7 @@ export const getEntitiesHook = async infuraProvider => {
   return listings;
 };
 
-export const getUpcomingMintsHook = async (
-  startSlot,
-  startNumberIndex,
-  infuraProvider
-) => {
+export const getUpcomingMintsHook = async (startSlot, startNumberIndex, infuraProvider) => {
   const contract = new ethers.Contract(
     contractsConfig.entropyGeneratorContractAddress,
     contractsConfig.entropyGeneratorContractAbi,
@@ -55,11 +51,7 @@ export const getUpcomingMintsHook = async (
   try {
     while (allEntropies.length < maxCount && startSlot < maxSlot) {
       const promises = [];
-      for (
-        let numberIndex = startNumberIndex;
-        numberIndex < 13 && allEntropies.length < maxCount;
-        numberIndex++
-      ) {
+      for (let numberIndex = startNumberIndex; numberIndex < 13 && allEntropies.length < maxCount; numberIndex++) {
         const promise = contract
           .getPublicEntropy(startSlot, numberIndex)
           .then(value => parseInt(value, 10)) //TODO check decimale
@@ -180,9 +172,7 @@ export const calculateNukeFactor = async (walletProvider, entity) => {
     signer
   );
   const finalNukeFactor = await nukeContract.calculateNukeFactor(entity);
-  const formattedNukeFactor = (Number(finalNukeFactor) / 1000)
-    .toFixed(3)
-    .toString();
+  const formattedNukeFactor = (Number(finalNukeFactor) / 1000).toFixed(3).toString();
   return formattedNukeFactor;
 };
 
@@ -197,10 +187,7 @@ export const approveNFTForTrading = async (tokenId, walletProvider) => {
       contractsConfig.traitForgeNftAddress,
       contractsConfig.traitForgeNftAbi
     );
-    const transaction = await nftContract.approve(
-      contractsConfig.entityTradingContractAddress,
-      tokenId
-    );
+    const transaction = await nftContract.approve(contractsConfig.entityTradingContractAddress, tokenId);
     await transaction.wait();
 
     toast.success('NFT approved successfully');
@@ -220,10 +207,7 @@ export const approveNFTForNuking = async (tokenId, walletProvider) => {
       contractsConfig.traitForgeNftAddress,
       contractsConfig.traitForgeNftAbi
     );
-    const transaction = await nftContract.approve(
-      contractsConfig.nukeContractAddress,
-      tokenId
-    );
+    const transaction = await nftContract.approve(contractsConfig.nukeContractAddress, tokenId);
     await transaction.wait();
     toast.success('NFT approved successfully');
   } catch (error) {
@@ -251,11 +235,7 @@ export const mintEntityHandler = async (walletProvider, open, entityPrice) => {
   }
 };
 
-export const mintBatchEntityHandler = async (
-  walletProvider,
-  open,
-  budgetAmount
-) => {
+export const mintBatchEntityHandler = async (walletProvider, open, budgetAmount) => {
   if (!walletProvider) return open();
   try {
     const mintContract = await createContract(
@@ -276,11 +256,7 @@ export const mintBatchEntityHandler = async (
 
 export const shortenAddress = address => {
   // Ensure the address is in the correct format
-  if (
-    typeof address !== 'string' ||
-    !address.startsWith('0x') ||
-    address.length !== 42
-  ) {
+  if (typeof address !== 'string' || !address.startsWith('0x') || address.length !== 42) {
     throw new Error('Invalid Ethereum address');
   }
 
@@ -312,10 +288,8 @@ export const getEntitiesListedByPlayer = async walletProvider => {
     contractsConfig.entityMergingContractAbi,
     signer
   );
-  const [tradeTokenIds, tradeSellers, tradePrices] =
-    await tradeContract.fetchListedEntities();
-  const [forgeTokenIds, forgeSellers, forgePrices] =
-    await forgeContract.fetchListings();
+  const [tradeTokenIds, tradeSellers, tradePrices] = await tradeContract.fetchListedEntities();
+  const [forgeTokenIds, forgeSellers, forgePrices] = await forgeContract.fetchListings();
   const listedEntities = [];
 
   for (let i = 0; i < tradeTokenIds.length; i++) {
@@ -353,9 +327,7 @@ export const getWalletBalance = async (walletProvider, address) => {
 
 export const fetchEthToUsdRate = async () => {
   try {
-    const response = await axios.get(
-      'https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH&tsyms=USD'
-    );
+    const response = await axios.get('https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH&tsyms=USD');
     return response.data.ETH.USD;
   } catch (error) {
     console.error('Error fetching ETH to USD rate:', error);

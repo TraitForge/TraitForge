@@ -11,22 +11,12 @@ import { HoneyPotBody } from '@/screens/honey-pot/HoneyPotBody';
 import { NukeEntity } from '@/screens/honey-pot/NukeEntity';
 import { FiltersHeader } from '@/components';
 import { useContextState } from '@/utils/context';
-import {
-  handlePrice,
-  approveNFTForNuking,
-  createContract,
-} from '@/utils/utils';
+import { handlePrice, approveNFTForNuking, createContract } from '@/utils/utils';
 
 const infuraProvider = new JsonRpcProvider(contractsConfig.infuraRPCURL);
 
 const HoneyPot = ({ usdAmount, ethAmount }) => {
-  const {
-    isLoading,
-    setIsLoading,
-    ownerEntities,
-    walletProvider,
-    getOwnersEntities,
-  } = useContextState();
+  const { isLoading, setIsLoading, ownerEntities, walletProvider, getOwnersEntities } = useContextState();
   const [selectedForNuke, setSelectedForNuke] = useState(null);
   const [step, setStep] = useState('one');
   const [sortOption, setSortOption] = useState('all');
@@ -48,10 +38,7 @@ const HoneyPot = ({ usdAmount, ethAmount }) => {
 
   const filteredAndSortedListings = useMemo(() => {
     let filtered = ownerEntities.filter(listing => {
-      if (
-        generationFilter &&
-        String(listing.generation) !== String(generationFilter)
-      ) {
+      if (generationFilter && String(listing.generation) !== String(generationFilter)) {
         return false;
       }
 
@@ -62,13 +49,9 @@ const HoneyPot = ({ usdAmount, ethAmount }) => {
     });
 
     if (sortingFilter === 'NukeFactor_low_to_high') {
-      filtered.sort(
-        (a, b) => parseFloat(a.nukeFactor) - parseFloat(b.nukeFactor)
-      );
+      filtered.sort((a, b) => parseFloat(a.nukeFactor) - parseFloat(b.nukeFactor));
     } else if (sortingFilter === 'NukeFactor_high_to_low') {
-      filtered.sort(
-        (a, b) => parseFloat(b.nukeFactor) - parseFloat(a.nukeFactor)
-      );
+      filtered.sort((a, b) => parseFloat(b.nukeFactor) - parseFloat(a.nukeFactor));
     }
 
     return filtered;
@@ -108,11 +91,7 @@ const HoneyPot = ({ usdAmount, ethAmount }) => {
   switch (step) {
     case 'three':
       content = (
-        <NukeEntity
-          selectedForNuke={selectedForNuke}
-          nukeEntity={nukeEntity}
-          handleStep={step => setStep(step)}
-        />
+        <NukeEntity selectedForNuke={selectedForNuke} nukeEntity={nukeEntity} handleStep={step => setStep(step)} />
       );
       break;
     case 'two':
@@ -123,9 +102,7 @@ const HoneyPot = ({ usdAmount, ethAmount }) => {
             sortOption={sortOption}
             handleSort={handleSort}
             color="purple"
-            handleFilterChange={(selectedOption, type) =>
-              handleFilterChange(selectedOption, type)
-            }
+            handleFilterChange={(selectedOption, type) => handleFilterChange(selectedOption, type)}
             generationFilter={generationFilter}
             sortingFilter={sortingFilter}
           />
@@ -147,11 +124,7 @@ const HoneyPot = ({ usdAmount, ethAmount }) => {
       break;
     default:
       content = (
-        <HoneyPotBody
-          handleStep={() => setStep('two')}
-          usdAmountInitial={usdAmount}
-          ethAmountInitial={ethAmount}
-        />
+        <HoneyPotBody handleStep={() => setStep('two')} usdAmountInitial={usdAmount} ethAmountInitial={ethAmount} />
       );
   }
 

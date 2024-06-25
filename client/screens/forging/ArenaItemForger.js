@@ -25,15 +25,15 @@ export const ArenaItemForger = ({
         <Image
           src={image}
           alt="forge place holder"
-          width={400}
-          height={500}
+          width={700}
+          height={800}
           className="w-full h-full hidden md:block"
         />
         <Image
           src="/images/poolSelectedCardSm.png"
           alt="forge place holder"
-          width={400}
-          height={500}
+          width={600}
+          height={600}
           className="w-full h-full block md:hidden"
         />
       </button>

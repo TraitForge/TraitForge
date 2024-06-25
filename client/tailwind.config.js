@@ -9,11 +9,11 @@ module.exports = {
     './screens/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    fontFamily: {
-      'bebas-neue': ['Bebas Neue', ...defaultTheme.fontFamily.sans],
-      electrolize: ['Electrolize', ...defaultTheme.fontFamily.sans],
-    },
     extend: {
+      fontFamily: {
+        bebas: ['var(--font-bebas)'],
+        electrolize: ['var(--font-electrolize)'],
+      },
       colors: {
         primary: '#58DCDE',
         'neutral-100': '#CECECE',

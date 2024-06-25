@@ -14,14 +14,8 @@ import { ListNow } from '@/screens/forging/ListNow';
 import { createContract } from '@/utils/utils';
 
 const Forging = () => {
-  const {
-    isLoading,
-    setIsLoading,
-    ownerEntities,
-    getOwnersEntities,
-    entitiesForForging,
-    getEntitiesForForging,
-  } = useContextState();
+  const { isLoading, setIsLoading, ownerEntities, getOwnersEntities, entitiesForForging, getEntitiesForForging } =
+    useContextState();
   const [step, setStep] = useState('one');
   const [isEntityListModalOpen, setIsEntityListModalOpen] = useState(false);
   const [isOwnerListOpen, setIsOwnerListOpen] = useState(false);
@@ -36,15 +30,13 @@ const Forging = () => {
   const handleSelectedFromPool = entity => setSelectedFromPool(entity);
   const handleSelectedFromWallet = entity => setSelectedEntity(entity);
 
+  const handleEntityListModal = () => setIsEntityListModalOpen(prevState => !prevState);
+  const handleOwnerEntityList = () => setIsOwnerListOpen(prevState => !prevState);
   useEffect(() => {
     getOwnersEntities();
     getEntitiesForForging();
   }, [walletProvider]);
 
-  const handleEntityListModal = () =>
-    setIsEntityListModalOpen(prevState => !prevState);
-  const handleOwnerEntityList = () =>
-    setIsOwnerListOpen(prevState => !prevState);
   const handleListingPage = () => setStep('two');
 
   const forgeEntity = async () => {
@@ -57,14 +49,10 @@ const Forging = () => {
         contractsConfig.entityMergingContractAbi
       );
       const feeInWei = BigInt(selectedFromPool.fee);
-      const transaction = await forgeContract.forgeWithListed(
-        selectedFromPool.tokenId,
-        selectedEntity.tokenId,
-        {
-          value: feeInWei,
-          gasLimit: 10000000,
-        }
-      );
+      const transaction = await forgeContract.forgeWithListed(selectedFromPool.tokenId, selectedEntity.tokenId, {
+        value: feeInWei,
+        gasLimit: 10000000,
+      });
       await transaction.wait();
       setProcessingText('Merging');
       toast.success('Forged successfully');
@@ -83,10 +71,7 @@ const Forging = () => {
         contractsConfig.entityMergingContractAbi
       );
       const feeInWei = ethers.parseEther(fee);
-      const transaction = await forgeContract.listForForging(
-        selectedForListing.tokenId,
-        feeInWei
-      );
+      const transaction = await forgeContract.listForForging(selectedForListing.tokenId, feeInWei);
       await transaction.wait();
       toast.success('Listed Successfully');
       setStep('one');
@@ -109,7 +94,7 @@ const Forging = () => {
   switch (step) {
     case 'one':
       content = (
-        <div className="">
+        <div className="max-md:h-full py-10 pt-5">
           <div className="h-full w-full">
             <div className="flex flex-col md:flex-row justify-center relative items-center">
               <h1 className="text-[36px] md:text-extra-large">Forging Arena</h1>
@@ -119,8 +104,9 @@ const Forging = () => {
                 width="200"
                 height="90"
                 borderColor="#FD8D26"
-                className="relative md:absolute md:top-0 md:right-1"
+                className="relative md:absolute md:top-0 md:right-1 "
                 onClick={handleListingPage}
+                textClass="font-electrolize"
               />
             </div>
             <div className="py-7 md:py-10 3xl:py-20">
@@ -140,6 +126,7 @@ const Forging = () => {
                 height="92"
                 disabled={processing}
                 onClick={forgeEntity}
+                textClass="font-bebas text-[48px]"
               />
             </div>
           </div>
@@ -157,11 +144,7 @@ const Forging = () => {
             </Modal>
           )}
           {isOwnerListOpen && (
-            <Modal
-              isOpen={isOwnerListOpen}
-              closeModal={() => setIsOwnerListOpen(false)}
-              modalClasses="items-end pb-4"
-            >
+            <Modal isOpen={isOwnerListOpen} closeModal={() => setIsOwnerListOpen(false)} modalClasses="items-end pb-4">
               <WalletEntityModal
                 ownerEntities={ownerEntities}
                 handleOwnerEntityList={handleOwnerEntityList}

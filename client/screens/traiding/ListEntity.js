@@ -1,11 +1,7 @@
 import { EntityCard, FiltersHeader } from '@/components';
 import { useState, useMemo } from 'react';
 
-export const ListEntity = ({
-  ownerEntities,
-  setSelectedForSale,
-  handleStep,
-}) => {
+export const ListEntity = ({ ownerEntities, setSelectedForSale, handleStep }) => {
   const [sortOption, setSortOption] = useState('all');
   const [generationFilter, setGenerationFilter] = useState('');
   const [sortingFilter, setSortingFilter] = useState('');
@@ -22,10 +18,7 @@ export const ListEntity = ({
 
   const filteredAndSortedOwnerEntities = useMemo(() => {
     let filtered = ownerEntities.filter(listing => {
-      if (
-        generationFilter &&
-        String(listing.generation) !== String(generationFilter)
-      ) {
+      if (generationFilter && String(listing.generation) !== String(generationFilter)) {
         return false;
       }
 
@@ -36,20 +29,16 @@ export const ListEntity = ({
     });
 
     if (sortingFilter === 'NukeFactor_low_to_high') {
-      filtered.sort(
-        (a, b) => parseFloat(a.nukeFactor) - parseFloat(b.nukeFactor)
-      );
+      filtered.sort((a, b) => parseFloat(a.nukeFactor) - parseFloat(b.nukeFactor));
     } else if (sortingFilter === 'NukeFactor_high_to_low') {
-      filtered.sort(
-        (a, b) => parseFloat(b.nukeFactor) - parseFloat(a.nukeFactor)
-      );
+      filtered.sort((a, b) => parseFloat(b.nukeFactor) - parseFloat(a.nukeFactor));
     }
 
     return filtered;
   }, [sortOption, generationFilter, sortingFilter, ownerEntities]);
 
   return (
-    <div>
+    <div className="overflow-y-auto flex-1">
       <FiltersHeader
         sortOption={sortOption}
         handleSort={handleSort}
@@ -59,7 +48,7 @@ export const ListEntity = ({
         generationFilter={generationFilter}
         sortingFilter={sortingFilter}
       />
-      <div className="grid grid-cols-3 lg:grid-cols-5 mt-10 gap-x-3 md:gap-x-[15px] gap-y-7 lg:gap-y-10">
+      <div className="grid grid-cols-3 lg:grid-cols-5 mt-10 gap-x-3  md:gap-x-[15px] gap-y-7 lg:gap-y-10">
         {filteredAndSortedOwnerEntities.map(entity => (
           <EntityCard
             key={entity.tokenId}

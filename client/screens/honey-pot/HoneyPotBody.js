@@ -5,11 +5,7 @@ import { handlePrice } from '@/utils/utils';
 import { useContextState } from '@/utils/context';
 import styles from '@/styles/honeypot.module.scss';
 
-export const HoneyPotBody = ({
-  handleStep,
-  usdAmountInitial,
-  ethAmountInitial,
-}) => {
+export const HoneyPotBody = ({ handleStep, usdAmountInitial, ethAmountInitial }) => {
   const [ethAmount, setEthAmount] = useState(ethAmountInitial);
   const [usdAmount, setUsdAmount] = useState(usdAmountInitial);
   const { infuraProvider } = useContextState();
@@ -26,8 +22,8 @@ export const HoneyPotBody = ({
   return (
     <>
       <div className={styles.frameContainer}>
-        <p className="text-extra-large">{ethAmount} ETH</p>
-        <p className="text-[40px]">= ${usdAmount} USD</p>
+        <p className="text-extra-large font-bebas">{ethAmount} ETH</p>
+        <p className="text-[40px] font-bebas">= ${usdAmount} USD</p>
       </div>
       <div className="flex flex-col justify-center items-center">
         <Button
@@ -35,6 +31,7 @@ export const HoneyPotBody = ({
           bg="rgba(12, 0, 31,0.8)"
           text="nuke entity"
           onClick={handleStep}
+          textClass="font-bebas text-[40px]"
         />
       </div>
     </>

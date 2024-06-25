@@ -6,10 +6,13 @@ import '../styles/index.css';
 import 'swiper/css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 import Logo from '@/public/images/websitelogo.png';
 import '@/styles/main.scss';
 import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/react';
+
+import { electroliceFont, bebasFont } from '@/public/fonts';
 
 const projectId = '60db0656302510a26d3e49acc62e5473';
 
@@ -44,22 +47,25 @@ createWeb3Modal({
 });
 
 const App = ({ Component, pageProps }) => (
-  <ContextProvider>
-    <Wrapper>
-      <DefaultSeo {...SEO} />
-      <Component {...pageProps} />
-      <ToastContainer
-        position="bottom-right"
-        theme="dark"
-        autoClose={3000}
-        closeOnClick
-        className="custom-toast-container"
-        closeButton={false}
-        style={{ fontSize: '20px' }}
-        limit={3}
-      />
-    </Wrapper>
-  </ContextProvider>
+  <div className={`${electroliceFont.variable} ${bebasFont.variable} font-sans`}>
+    <ContextProvider>
+      <Wrapper>
+        <DefaultSeo {...SEO} />
+        <Component {...pageProps} />
+        <ToastContainer
+          position="bottom-right"
+          theme="dark"
+          autoClose={3000}
+          closeOnClick
+          className="custom-toast-container"
+          closeButton={false}
+          style={{ fontSize: '20px' }}
+          limit={3}
+        />
+      </Wrapper>
+    </ContextProvider>
+    <div id="modal-root"></div>
+  </div>
 );
 
 export default App;

@@ -1,7 +1,7 @@
 .honeyPotContainer {
   color: #ffffff;
   height: 100%;
-  font-family: 'Bebas Neue', sans-serif;
+  // font-family: 'Bebas Neue', sans-serif;
   background: url('/images/honeypot-background.jpeg') center / cover no-repeat;
   background-attachment: fixed;
   padding-top: 54px;
@@ -9,7 +9,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   .frameContainer {
     background-image: url('/images/honeypotcontainer.png');
     background-position: center;
@@ -22,6 +21,7 @@
     align-items: center;
     flex-direction: column;
     margin: 20px auto;
+    @apply font-bebas;
 
     @media (max-width: 756px) {
       max-width: 384px;

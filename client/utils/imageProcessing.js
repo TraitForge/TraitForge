@@ -6,15 +6,9 @@ import s3 from '@/aws-config';
 export const composeIMG = async (paddedEntropy, entityGeneration) => {
   console.log('starting next image:', paddedEntropy, entityGeneration);
   try {
-    const baseCharacterBuffer = await baseCharacterImg(
-      entityGeneration,
-      paddedEntropy
-    );
+    const baseCharacterBuffer = await baseCharacterImg(entityGeneration, paddedEntropy);
 
-    const variablesImgBuffer = await variablesLayer(
-      paddedEntropy,
-      entityGeneration
-    );
+    const variablesImgBuffer = await variablesLayer(paddedEntropy, entityGeneration);
 
     if (!baseCharacterBuffer || !variablesImgBuffer) {
       console.error('One of the image buffers is invalid');
@@ -51,82 +45,56 @@ const variablesLayer = async (paddedEntropy, entityGeneration) => {
   const entropy = paddedEntropy ? paddedEntropy.toString() : '';
   const generation = entityGeneration ? entityGeneration.toString() : '';
 
-  const optionIndex1 =
-    parseInt(entropy[0]) % varConfig.varOptions.varOptions1.length;
-  const optionIndex2 =
-    parseInt(entropy[1]) % varConfig.varOptions.varOptions2.length;
-  const optionIndex3 =
-    parseInt(entropy[2]) % varConfig.varOptions.varOptions3.length;
-  const optionIndex4 =
-    parseInt(entropy[3]) % varConfig.varOptions.varOptions4.length;
+  const optionIndex1 = parseInt(entropy[0]) % varConfig.varOptions.varOptions1.length;
+  const optionIndex2 = parseInt(entropy[1]) % varConfig.varOptions.varOptions2.length;
+  const optionIndex3 = parseInt(entropy[2]) % varConfig.varOptions.varOptions3.length;
+  const optionIndex4 = parseInt(entropy[3]) % varConfig.varOptions.varOptions4.length;
   const color1ArrayIndex = parseInt(entropy[5]);
   const color2ArrayIndex = parseInt(entropy[4]);
   const color3ArrayIndex = parseInt(entropy[3]);
   const color4ArrayIndex = parseInt(entropy[2]);
   const color1 =
     varConfig.colorOptions[`colorOptions${color1ArrayIndex}`][
-      parseInt(entropy[5]) %
-        varConfig.colorOptions[`colorOptions${color1ArrayIndex}`].length
+      parseInt(entropy[5]) % varConfig.colorOptions[`colorOptions${color1ArrayIndex}`].length
     ];
   const color2 =
     varConfig.colorOptions[`colorOptions${color2ArrayIndex}`][
-      parseInt(entropy[4]) %
-        varConfig.colorOptions[`colorOptions${color2ArrayIndex}`].length
+      parseInt(entropy[4]) % varConfig.colorOptions[`colorOptions${color2ArrayIndex}`].length
     ];
   const color3 =
     varConfig.colorOptions[`colorOptions${color3ArrayIndex}`][
-      parseInt(entropy[3]) %
-        varConfig.colorOptions[`colorOptions${color3ArrayIndex}`].length
+      parseInt(entropy[3]) % varConfig.colorOptions[`colorOptions${color3ArrayIndex}`].length
     ];
   const color4 =
     varConfig.colorOptions[`colorOptions${color4ArrayIndex}`][
-      parseInt(entropy[2]) %
-        varConfig.colorOptions[`colorOptions${color4ArrayIndex}`].length
+      parseInt(entropy[2]) % varConfig.colorOptions[`colorOptions${color4ArrayIndex}`].length
     ];
   const color5 =
     varConfig.colorOptions2[`colorOptions${color3ArrayIndex}`][
-      parseInt(entropy[3]) %
-        varConfig.colorOptions2[`colorOptions${color3ArrayIndex}`].length
+      parseInt(entropy[3]) % varConfig.colorOptions2[`colorOptions${color3ArrayIndex}`].length
     ];
   const color6 =
     varConfig.colorOptions2[`colorOptions${color4ArrayIndex}`][
-      parseInt(entropy[2]) %
-        varConfig.colorOptions2[`colorOptions${color4ArrayIndex}`].length
+      parseInt(entropy[2]) % varConfig.colorOptions2[`colorOptions${color4ArrayIndex}`].length
     ];
 
   let varImage1 = await tintVariables(
-    path.join(
-      generation,
-      varConfig.varPaths.varPath1,
-      `${varConfig.varOptions.varOptions1[optionIndex1]}.png`
-    ),
+    path.join(generation, varConfig.varPaths.varPath1, `${varConfig.varOptions.varOptions1[optionIndex1]}.png`),
     color1,
     color5
   );
   let varImage2 = await tintVariables(
-    path.join(
-      generation,
-      varConfig.varPaths.varPath2,
-      `${varConfig.varOptions.varOptions2[optionIndex2]}.png`
-    ),
+    path.join(generation, varConfig.varPaths.varPath2, `${varConfig.varOptions.varOptions2[optionIndex2]}.png`),
     color2,
     color6
   );
   let varImage3 = await tintVariables(
-    path.join(
-      generation,
-      varConfig.varPaths.varPath3,
-      `${varConfig.varOptions.varOptions3[optionIndex3]}.png`
-    ),
+    path.join(generation, varConfig.varPaths.varPath3, `${varConfig.varOptions.varOptions3[optionIndex3]}.png`),
     color3,
     color5
   );
   let varImage4 = await tintVariables(
-    path.join(
-      generation,
-      varConfig.varPaths.varPath4,
-      `${varConfig.varOptions.varOptions4[optionIndex4]}.png`
-    ),
+    path.join(generation, varConfig.varPaths.varPath4, `${varConfig.varOptions.varOptions4[optionIndex4]}.png`),
     color4,
     color6
   );
@@ -149,33 +117,21 @@ const variablesLayer = async (paddedEntropy, entityGeneration) => {
   return await baseImage.toBuffer();
 };
 
-const baseCharacterImg = async (
-  entityGeneration,
-  paddedEntropy,
-  overlayBuffer = null,
-  offsetX = 0,
-  offsetY = 0
-) => {
+const baseCharacterImg = async (entityGeneration, paddedEntropy, overlayBuffer = null, offsetX = 0, offsetY = 0) => {
   const generation = entityGeneration.toString();
   const entropy = paddedEntropy.toString();
   const imagePath = path.join(generation, `baseCharacter_${generation}.png`);
 
   const hexColorWhite =
     varConfig.colorOptions.characterColorOptions1[
-      parseInt(entropy[5]) %
-        varConfig.colorOptions.characterColorOptions1.length
+      parseInt(entropy[5]) % varConfig.colorOptions.characterColorOptions1.length
     ];
   const hexColorGrey =
     varConfig.colorOptions.characterColorOptions2[
-      parseInt(entropy[5]) %
-        varConfig.colorOptions.characterColorOptions2.length
+      parseInt(entropy[5]) % varConfig.colorOptions.characterColorOptions2.length
     ];
   // let baseCharacter = sharp(imagePath);
-  const baseCharacter = await tintCharacter(
-    imagePath,
-    hexColorWhite,
-    hexColorGrey
-  );
+  let baseCharacter = await tintCharacter(imagePath, hexColorWhite, hexColorGrey);
 
   if (overlayBuffer) {
     baseCharacter = sharp(await baseCharacter.toBuffer()).composite([
@@ -193,18 +149,11 @@ const tintCharacter = async (imagePath, hexColorWhite, hexColorGrey) => {
   const imageObj = await getS3Object(imagePath);
 
   const originalImage = sharp(imageObj);
-  const { data, info } = await originalImage
-    .raw()
-    .toBuffer({ resolveWithObject: true });
+  const { data, info } = await originalImage.raw().toBuffer({ resolveWithObject: true });
 
   for (let i = 0; i < data.length; i += 4) {
-    const isPureWhite =
-      data[i] === 255 && data[i + 1] === 255 && data[i + 2] === 255;
-    const isPureGrey =
-      data[i] === data[i + 1] &&
-      data[i + 1] === data[i + 2] &&
-      data[i] !== 0 &&
-      data[i] !== 255;
+    const isPureWhite = data[i] === 255 && data[i + 1] === 255 && data[i + 2] === 255;
+    const isPureGrey = data[i] === data[i + 1] && data[i + 1] === data[i + 2] && data[i] !== 0 && data[i] !== 255;
 
     if (isPureWhite) {
       data[i] = rgbWhite.r;
@@ -235,18 +184,11 @@ const tintVariables = async (imagePath, firstColor, secondColor) => {
   const imageObj = await getS3Object(imagePath);
 
   const originalImage = sharp(imageObj);
-  const { data, info } = await originalImage
-    .raw()
-    .toBuffer({ resolveWithObject: true });
+  const { data, info } = await originalImage.raw().toBuffer({ resolveWithObject: true });
 
   for (let i = 0; i < data.length; i += 4) {
-    const isPureWhite =
-      data[i] === 255 && data[i + 1] === 255 && data[i + 2] === 255;
-    const isPureGrey =
-      data[i] === data[i + 1] &&
-      data[i + 1] === data[i + 2] &&
-      data[i] !== 0 &&
-      data[i] !== 255;
+    const isPureWhite = data[i] === 255 && data[i + 1] === 255 && data[i + 2] === 255;
+    const isPureGrey = data[i] === data[i + 1] && data[i + 1] === data[i + 2] && data[i] !== 0 && data[i] !== 255;
 
     if (isPureWhite) {
       data[i] = rgbWhite.r;

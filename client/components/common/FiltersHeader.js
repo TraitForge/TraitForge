@@ -12,8 +12,7 @@ export const FiltersHeader = ({
   filterOptions = ['all', 'forgers', 'mergers'],
   pageType, // Add this prop to determine which sorting options to display
 }) => {
-  const commonClasses =
-    'after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px]';
+  const commonClasses = 'after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px]';
   const activeClasses = classNames(commonClasses, {
     'after:bg-neon-orange': color === 'orange',
     'after:bg-neon-green': color === 'green',
@@ -41,13 +40,7 @@ export const FiltersHeader = ({
   ];
 
   const borderColor =
-    color === 'orange'
-      ? '#ff7a00'
-      : color === 'green'
-        ? '#4CAF50'
-        : color === 'purple'
-          ? '#B026FF'
-          : '#ccc';
+    color === 'orange' ? '#ff7a00' : color === 'green' ? '#4CAF50' : color === 'purple' ? '#B026FF' : '#ccc';
   const customStyles = {
     control: styles => ({
       ...styles,
@@ -63,10 +56,11 @@ export const FiltersHeader = ({
     }),
     menu: styles => ({
       ...styles,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: 'rgba(0, 0, 0, 0.6)',
       boxShadow: `0px 0px 1px 1px ${borderColor}`,
       minWidth: '190px',
       right: 0,
+      zIndex: 100,
     }),
     option: styles => ({
       ...styles,
@@ -83,12 +77,12 @@ export const FiltersHeader = ({
   };
 
   return (
-    <div className="flex w-full items-center uppercase pt-6 z-50">
+    <div className="flex items-center flex-wrap  w-full uppercase pt-6 z-50 justify-between mb-3 max-md:gap-3">
       <div className="flex gap-x-2 md:gap-x-6 text-[24px]">
         {filterOptions.map(type => (
           <button
             key={type}
-            className={`${sortOption === type ? activeClasses : ''} relative px-3 md:px-6 pb-3`}
+            className={`${sortOption === type ? activeClasses : ''} relative px-3 md:px-6 font-bebas`}
             onClick={() => {
               if (color !== 'orange') {
                 handleSort(type);
@@ -99,36 +93,32 @@ export const FiltersHeader = ({
           </button>
         ))}
       </div>
-      <div className="flex-1">
-        <div className="flex gap-x-6 text-[20px] justify-end">
+      <div className="flex gap-x-3 md:gap-x-6 text-[20px] justify-end font-bebas">
+        <Select
+          options={genOptions}
+          onChange={option => handleFilterChange(option, 'generation')}
+          value={genOptions.find(option => option.value === generationFilter)}
+          styles={{
+            ...customStyles,
+            menu: styles => ({
+              ...styles,
+              minWidth: '100px',
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              boxShadow: `0px 0px 1px 1px ${borderColor}`,
+              zIndex: 100,
+            }),
+          }}
+        />
+        {!hideSortingSelect && (
           <Select
-            options={genOptions}
-            onChange={option => handleFilterChange(option, 'generation')}
-            value={genOptions.find(option => option.value === generationFilter)}
-            styles={{
-              ...customStyles,
-              menu: styles => ({
-                ...styles,
-                minWidth: '100px',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                boxShadow: `0px 0px 1px 1px ${borderColor}`,
-              }),
-            }}
+            options={pageType === 'nuke' ? nukeSortingOptions : sortingOptions}
+            onChange={option => handleFilterChange(option, 'sorting')}
+            value={(pageType === 'nuke' ? nukeSortingOptions : sortingOptions).find(
+              option => option.value === sortingFilter
+            )}
+            styles={customStyles}
           />
-          {!hideSortingSelect && (
-            <Select
-              options={
-                pageType === 'nuke' ? nukeSortingOptions : sortingOptions
-              }
-              onChange={option => handleFilterChange(option, 'sorting')}
-              value={(pageType === 'nuke'
-                ? nukeSortingOptions
-                : sortingOptions
-              ).find(option => option.value === sortingFilter)}
-              styles={customStyles}
-            />
-          )}
-        </div>
+        )}
       </div>
     </div>
   );

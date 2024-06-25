@@ -4,14 +4,7 @@ import classNames from 'classnames';
 
 import styles from './styles.module.scss';
 
-const Modal = ({
-  children,
-  background,
-  isOpen,
-  closeModal,
-  modalClasses,
-  containerClass,
-}) => {
+const Modal = ({ children, background, isOpen, closeModal, modalClasses, containerClass }) => {
   const modalStyle = background
     ? {
         backgroundImage: `url(${background})`,
@@ -20,36 +13,16 @@ const Modal = ({
 
   if (!isOpen) return null;
 
-  const contClasses = classNames(
-    'relative bg-center bg-no-repeat object-contain',
-    {
-      [containerClass]: containerClass,
-    }
-  );
+  const contClasses = classNames('relative bg-center bg-no-repeat object-contain', {
+    [containerClass]: containerClass,
+  });
 
   return createPortal(
-    <div
-      className={`${styles.modalOverlay} ${modalClasses ? modalClasses : ''}`}
-      onClick={closeModal}
-    >
-      <div
-        style={modalStyle}
-        onClick={e => e.stopPropagation()}
-        className={contClasses}
-      >
+    <div className={`${styles.modalOverlay} ${modalClasses ? modalClasses : ''}`} onClick={closeModal}>
+      <div style={modalStyle} onClick={e => e.stopPropagation()} className={contClasses}>
         {children}
-        <button
-          aria-label="close modal button"
-          className={styles.closebutton}
-          onClick={closeModal}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
+        <button aria-label="close modal button" className={styles.closebutton} onClick={closeModal}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path
               stroke="#fff"
               strokeLinecap="round"

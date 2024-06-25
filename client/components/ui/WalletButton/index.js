@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FaWallet } from 'react-icons/fa';
-import {
-  useWeb3ModalAccount,
-  useWeb3Modal,
-  useWeb3ModalProvider,
-} from '@web3modal/ethers/react';
+import { useWeb3ModalAccount, useWeb3Modal, useWeb3ModalProvider } from '@web3modal/ethers/react';
 
 import { WalletModal } from '@/screens/wallet/WallterModal';
 import { getWalletBalance } from '@/utils/utils';
@@ -35,17 +31,9 @@ export default function ConnectButton() {
         }}
       >
         <FaWallet />
-        <span className="hidden lg:block text-base text-gray-200 lg:text-[32px]">
-          wallet
-        </span>
+        <span className="hidden lg:block text-base text-gray-200 lg:text-[32px] font-bebas">wallet</span>
       </button>
-      {isOpen && (
-        <WalletModal
-          isOpen={isOpen}
-          closeModal={() => setIsOpen(false)}
-          balanceInETH={balanceInETH}
-        />
-      )}
+      {isOpen && <WalletModal isOpen={isOpen} closeModal={() => setIsOpen(false)} balanceInETH={balanceInETH} />}
     </>
   );
 }
