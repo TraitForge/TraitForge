@@ -11,7 +11,7 @@ const links = [
   { url: '/forging', text: 'FORGING' },
   { url: '/trading', text: 'MARKETPLACE' },
   { url: '/nuke-fund', text: 'NUKEFUND' },
-  //{ url: '/stats', text: 'GAME STATS' },
+  { url: '/stats', text: 'GAME STATS' },
 ];
 
 const Navbar = () => {
