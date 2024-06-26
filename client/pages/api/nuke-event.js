@@ -17,7 +17,7 @@ export default async function handler(req, res) {
       const shortenedAddress = `${toAddress.substring(0, 5)}...${toAddress.substring(toAddress.length - 5)}`;
       const message = JSON.stringify(`Entity Nuked! ${shortenedAddress} nuked token ID ${tokenId} for ${price}`);
 
-      const response = await axios.post('http://localhost:3000/api/telegram-bot', {
+      const response = await axios.post('https://trait-forge-8j8p2mf8s-dev-gods.vercel.app/api/telegram-bot', {
         message
       });
 
