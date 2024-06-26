@@ -25,7 +25,7 @@
     "alchemy-sdk": "^3.2.0",
     "autoprefixer": "^10.4.19",
     "aws-sdk": "^2.1597.0",
-    "axios": "^1.6.8",
+    "axios": "^1.7.2",
     "canvas-confetti": "^1.9.2",
     "chart.js": "^4.4.2",
     "classnames": "^2.5.1",
@@ -48,9 +48,10 @@
     "sharp": "^0.33.3",
     "slick-carousel": "^1.8.1",
     "swiper": "^11.1.0",
+    "telegraf": "^4.16.3",
     "typescript": "^5.4.3",
     "web-vitals": "^3.5.2",
-    "web3": "^4.6.0"
+    "web3": "^4.10.0"
   },
   "devDependencies": {
     "eslint": "^8",
