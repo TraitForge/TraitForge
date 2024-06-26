@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   try {
     const { event } = req.body;
     const activity = event.activity[0];
-    if (activity.fromAddress === '0x25b428dfde728ccfaddad7e29e4ac23c24ed7fd1a6e3e3f91894a9a073f5dfff') {
+    if (activity.topics === '0x25b428dfde728ccfaddad7e29e4ac23c24ed7fd1a6e3e3f91894a9a073f5dfff') {
     // Mints new NFT
      const tokenId = Number(activity.erc721TokenId);
      const price = Number(activity.price);
