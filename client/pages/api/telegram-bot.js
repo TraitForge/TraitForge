@@ -25,13 +25,9 @@ bot.on('text', async (ctx) => {
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const { tokenId, toAddress, value } = req.body;
+      const { message } = req.body;
 
-      const messageText = JSON.stringify(
-        `New NFT minted: ${toAddress} minted token ID: ${tokenId} for ${value}`
-      );
-
-      await bot.telegram.sendMessage(process.env.BOT_CHAT_ID, messageText);
+      await bot.telegram.sendMessage(process.env.BOT_CHAT_ID, message);
 
       res.status(200).send('Success');
     } catch (error) {

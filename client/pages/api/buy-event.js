@@ -1,33 +1,33 @@
-let purchaseActions = [];
+import axios from 'axios';
 
 export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).send('Method Not Allowed');
+  }
+
   try {
     const { event } = req.body;
     const activity = event.activity[0];
-    if (activity.topics === '0x5fafad85dec201c2e73b6a2bef6351129304a624ea8720ecd04cd7f04d83bc39') {
-    // Mints new NFT
-     const tokenId = Number(activity.erc721TokenId);
-     const price = Number(activity.price);
-     const fromAddress = activity.fromAddress;
-     const toAddress = activity.toAddress;
-     const value = Number(activity.value);
 
-     // Store the details in the array
-     purchaseActions.push({ tokenId, fromAddress, toAddress, value, price });
+    if (activity.topics === '0x8c9149f14ad96a26724a68fd0cc1d0ed43cdbf7e29d39c7857ca4c1d5b5a864d') {
+      const tokenId = Number(activity.erc721TokenId);
+      const price = activity.price;
+      const toAddress = activity.toAddress;
 
-      // Log the details
-      console.log(`Token ID: ${tokenId}`);
-      console.log(`From Address: ${fromAddress}`);
-      console.log(`To Address: ${toAddress}`);
-      console.log(`Value: ${value}`);
-      console.log(`Price: ${price}`);
+      const shortenedAddress = `${toAddress.substring(0, 5)}...${toAddress.substring(toAddress.length - 5)}`;
+      const message = JSON.stringify(`Entity Bought! ${shortenedAddress} bought token ID ${tokenId} for ${price}`);
 
+      const response = await axios.post('http://localhost:3000/api/telegram-bot', {
+        message
+      });
+
+      console.log('NFT data sent to Telegram bot:', response.data);
       res.status(200).send('Ok');
     } else {
       res.status(400).send('Invalid values');
     }
   } catch (e) {
-    console.log('Nft event error:', e);
-    res.status(500).send(e);
+    console.log('NFT event error:', e);
+    res.status(500).send(e.message);
   }
 }
