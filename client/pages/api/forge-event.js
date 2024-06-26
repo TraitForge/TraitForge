@@ -14,13 +14,13 @@ export default async function handler(req, res) {
       const price = activity.price;
       const toAddress = activity.toAddress;
 
+
+      
       const shortenedAddress = `${toAddress.substring(0, 5)}...${toAddress.substring(toAddress.length - 5)}`;
       const message = JSON.stringify(`Entity Forged! ${shortenedAddress} forged token ID ${tokenId} for ${price}`);
-
       const response = await axios.post('http://localhost:3000/api/telegram-bot', {
         message
       });
-
       console.log('NFT data sent to Telegram bot:', response.data);
       res.status(200).send('Ok');
     } else {
