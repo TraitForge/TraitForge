@@ -1,16 +1,19 @@
+let mintActions = [];
 
 export default async function handler(req, res) {
   try {
     const { event } = req.body;
     const activity = event.activity[0];
+    if (activity.fromAddress === '0x0000000000000000000000000000000000000000000000000000000000000000') {
+    // Mints new NFT
+     const tokenId = Number(activity.erc721TokenId);
+     const price = Number(activity.price);
+     const fromAddress = activity.fromAddress;
+     const toAddress = activity.toAddress;
+     const value = Number(activity.value);
 
-    if (activity.fromAddress === '0x0000000000000000000000000000000000000000') {
-      // Mints new NFT
-      const tokenId = Number(activity.erc721TokenId);
-      const price = Number(activity.price);
-      const fromAddress = activity.fromAddress;
-      const toAddress = activity.toAddress;
-      const value = Number(activity.value);
+     // Store the details in the array
+     mintActions.push({ tokenId, fromAddress, toAddress, value, price });
 
       // Log the details
       console.log(`Token ID: ${tokenId}`);
@@ -21,7 +24,7 @@ export default async function handler(req, res) {
 
       res.status(200).send('Ok');
     } else {
-      res.status(400).send('Invalid fromAddress');
+      res.status(400).send('Invalid values');
     }
   } catch (e) {
     console.log('Nft event error:', e);

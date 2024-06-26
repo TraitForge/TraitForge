@@ -1,10 +1,10 @@
-let nukeActions = [];
+let purchaseActions = [];
 
 export default async function handler(req, res) {
   try {
     const { event } = req.body;
     const activity = event.activity[0];
-    if (activity.fromAddress === '0x8c9149f14ad96a26724a68fd0cc1d0ed43cdbf7e29d39c7857ca4c1d5b5a864d') {
+    if (activity.fromAddress === '0x00000000000000000000000072b608d591a06308825a4e94f4c635a4391069f5') {
     // Mints new NFT
      const tokenId = Number(activity.erc721TokenId);
      const price = Number(activity.price);
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
      const value = Number(activity.value);
 
      // Store the details in the array
-     nukeActions.push({ tokenId, fromAddress, toAddress, value, price });
+     purchaseActions.push({ tokenId, fromAddress, toAddress, value, price });
 
       // Log the details
       console.log(`Token ID: ${tokenId}`);
@@ -31,4 +31,3 @@ export default async function handler(req, res) {
     res.status(500).send(e);
   }
 }
-
