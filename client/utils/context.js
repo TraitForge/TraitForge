@@ -207,7 +207,7 @@ const ContextProvider = ({ children }) => {
     if (entityPrice) {
       const priceToIndex = Math.floor(entityPrice * 10000);
       const startSlot = Math.floor(priceToIndex / 13);
-      const startNumberIndex = (priceToIndex % 13) -1;
+      const startNumberIndex = (priceToIndex + 12) % 13;
       getUpcomingMints(startSlot, startNumberIndex);
     }
   }, [entityPrice]);
