@@ -9,12 +9,14 @@ export default async function handler(req, res) {
     const { event } = req.body;
     const activity = event.activity[0];
 
-    if (activity.topics === '0x8c9149f14ad96a26724a68fd0cc1d0ed43cdbf7e29d39c7857ca4c1d5b5a864d') {
+    if (activity.topics === '0x5fafad85dec201c2e73b6a2bef6351129304a624ea8720ecd04cd7f04d83bc39') {
       const tokenId = Number(activity.erc721TokenId);
       const price = activity.price;
-      const toAddress = activity.toAddress;
-      const shortenedAddress = `${toAddress.substring(0, 5)}...${toAddress.substring(toAddress.length - 5)}`;
-      const message = JSON.stringify(`Entity Bought! ${shortenedAddress} bought token ID ${tokenId} for ${price}`);
+      const seller = activity.fromAddress;
+      const buyer = activity.toAddress;
+      const buyerAddress = `${buyer.substring(0, 5)}...${buyer.substring(buyer.length - 5)}`;
+      const sellerAddress = `${seller.substring(0, 5)}...${seller.substring(seller.length - 5)}`;
+      const message = `Entity Bought! ${buyerAddress} bought token ID ${tokenId} from ${sellerAddress} for ${price}`;
       const response = await axios.post('http://localhost:3000/api/telegram-bot', {
         message
       });

@@ -9,13 +9,10 @@ export default async function handler(req, res) {
     const { event } = req.body;
     const activity = event.activity[0];
 
-    if (activity.topics === '0x8c9149f14ad96a26724a68fd0cc1d0ed43cdbf7e29d39c7857ca4c1d5b5a864d') {
+    if (activity.topics === '0x19f5f791ee407773427bf7b970bbbc3375065c32edd1ab142e23a84f94b0719b') {
       const tokenId = Number(activity.erc721TokenId);
       const price = activity.price;
       const toAddress = activity.toAddress;
-
-
-
       const shortenedAddress = `${toAddress.substring(0, 5)}...${toAddress.substring(toAddress.length - 5)}`;
       const message = JSON.stringify(`Entity Minted! ${shortenedAddress} minted token ID ${tokenId} for ${price}`);
       const response = await axios.post('http://localhost:3000/api/telegram-bot', {
